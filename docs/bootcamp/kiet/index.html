@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Karyashala - Certificate Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Login Section -->
+        <section id="login-section" class="screen active">
+            <div class="glass-card">
+                <div class="brand">
+                    <div class="logo-icon">🎓</div>
+                    <h1>AI Karyashala</h1>
+                    <p>Certificate Download Portal</p>
+                </div>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="student-name">Full Name</label>
+                        <input type="text" id="student-name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="roll-no">Roll Number</label>
+                        <input type="text" id="roll-no" placeholder="e.g. 2201001" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter password" required>
+                    </div>
+                    <p id="login-error" class="error-msg hidden">Invalid credentials. Please try again.</p>
+                    <button type="submit" class="btn-primary">Login to Portal</button>
+
+
+                </form>
+            </div>
+        </section>
+
+        <!-- Upload & Crop Section -->
+        <section id="upload-section" class="screen hidden">
+            <div class="glass-card wide">
+                <div class="header-row">
+                    <h2>Welcome, <span id="user-display-name">Student</span></h2>
+                    <button id="logout-btn" class="btn-text">Logout</button>
+                </div>
+
+                <div class="upload-workflow">
+                    <div class="step-card">
+                        <span class="step-num">1</span>
+                        <h3>Upload Photo</h3>
+                        <p>Upload a clear passport-size photo for your ID card.</p>
+                        <label for="photo-input" class="file-drop-zone">
+                            <span class="icon">📁</span>
+                            <span>Click to Upload or Drag File</span>
+                            <input type="file" id="photo-input" accept="image/*" hidden>
+                        </label>
+                    </div>
+
+                    <div class="step-card editor hidden" id="crop-container">
+                        <h3>Adjust Photo</h3>
+                        <div class="cropper-wrapper">
+                            <img id="image-to-crop" src="" alt="To Crop">
+                        </div>
+                        <div class="actions">
+                            <button id="crop-btn" class="btn-primary">Save Photo</button>
+                        </div>
+                    </div>
+
+                    <div class="step-card hidden" id="preview-container">
+                        <span class="step-num">2</span>
+                        <h3>Ready to Generate</h3>
+                        <div class="preview-box">
+                            <img id="final-preview" src="" alt="Passport Photo">
+                        </div>
+                        <button id="generate-btn" class="btn-success">Generate Certificate</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificate View Section -->
+        <section id="certificate-section" class="screen hidden">
+            <div class="glass-card wide extra-wide">
+                <div class="header-row">
+                    <h2>Your Certificate</h2>
+                    <div class="actions">
+                        <button id="lang-toggle-btn" class="btn-secondary" data-lang="en">Switch to Telugu
+                            (తెలుగు)</button>
+                        <button id="download-btn" class="btn-primary">Download High-Res (JPG)</button>
+                        <button id="back-btn" class="btn-secondary">Back</button>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <!-- Canvas will be injected here -->
+                    <canvas id="certificate-canvas"></canvas>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="assets/js/certificate-renderer.js?v=2"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

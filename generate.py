@@ -128,11 +128,12 @@ def generate_html_page(template_path, output_path, student, base_url, assets_pat
 
 def generate_certificates(students, args, project_dir):
     """Main generation function using Playwright."""
-    render_html = project_dir / 'render.html'
+    docs_dir = project_dir / 'docs' / 'bootcamp' / 'kiet'
+    render_html = docs_dir / 'render.html'
     template_html = project_dir / 'template.html'
-    student_images_dir = project_dir / 'assets' / 'student_images'
-    output_dir = Path(args.output) if args.output else project_dir
-    pdfs_dir = output_dir / 'pdfs'
+    student_images_dir = docs_dir / 'assets' / 'student_images'
+    output_dir = Path(args.output) if args.output else docs_dir
+    pdfs_dir = project_dir / 'pdfs'
 
     # Create output directories
     pdfs_dir.mkdir(parents=True, exist_ok=True)
