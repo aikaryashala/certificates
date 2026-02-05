@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Renderer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+        }
+        #certificate-canvas {
+            display: block;
+        }
+        #status {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="status">Ready</div>
+    <canvas id="certificate-canvas"></canvas>
+
+    <!-- QRCode Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <!-- Certificate Renderer -->
+    <script src="assets/js/certificate-renderer.js"></script>
+
+    <script>
+        // Status helper
+        function setStatus(msg) {
+            document.getElementById('status').textContent = msg;
+            console.log('[Renderer]', msg);
+        }
+
+        // Wait for fonts to load
+        async function waitForFonts() {
+            setStatus('Loading fonts...');
+            await document.fonts.ready;
+
+            // Explicitly load the fonts we need
+            const fontsToLoad = [
+                new FontFace('UnifrakturCook', 'url(https://fonts.gstatic.com/s/unifrakturcook/v23/IurA6Yli8YOdcoky-0PTTdkm56n05Yw.woff2)'),
+                new FontFace('Cormorant Garamond', 'url(https://fonts.gstatic.com/s/cormorantgaramond/v16/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYrEtFmQ.woff2)'),
+                new FontFace('Montserrat', 'url(https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXo.woff2)'),
+                new FontFace('Outfit', 'url(https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4TC1C4G-EiAou6Y.woff2)')
+            ];
+
+            for (const font of fontsToLoad) {
+                try {
+                    await font.load();
+                    document.fonts.add(font);
+                } catch (e) {
+                    console.warn('Font load warning:', font.family, e);
+                }
+            }
+
+            setStatus('Fonts loaded');
+        }
+
+        // Main render function called by Playwright
+        async function renderStudentCertificate(studentData, photoPath) {
+            try {
+                setStatus('Starting render for: ' + studentData.student_name);
+
+                // Wait for fonts
+                await waitForFonts();
+
+                // Use photo path directly (should be base64 data URL from Python)
+                let photoSrc = photoPath;
+
+                // Render the certificate
+                setStatus('Rendering certificate...');
+                await renderCertificate(studentData, photoSrc, 'en');
+
+                setStatus('Render complete');
+
+                // Hide status for screenshot
+                document.getElementById('status').style.display = 'none';
+
+                // Return success (Playwright will take screenshot)
+                const canvas = document.getElementById('certificate-canvas');
+                return {
+                    success: true,
+                    width: canvas.width,
+                    height: canvas.height
+                };
+            } catch (error) {
+                setStatus('Error: ' + error.message);
+                console.error(error);
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+        }
+
+        // Export canvas as PNG data URL
+        function getCanvasDataUrl(quality = 1.0) {
+            const canvas = document.getElementById('certificate-canvas');
+            return canvas.toDataURL('image/png', quality);
+        }
+
+        // Export canvas as JPEG data URL
+        function getCanvasJpegDataUrl(quality = 0.95) {
+            const canvas = document.getElementById('certificate-canvas');
+            return canvas.toDataURL('image/jpeg', quality);
+        }
+
+        // Signal that the page is ready
+        window.rendererReady = true;
+        setStatus('Renderer ready');
+    </script>
+</body>
+</html>

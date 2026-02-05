@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>{{PAGE_TITLE}}</title>
+    <meta name="title" content="{{PAGE_TITLE}}">
+    <meta name="description" content="{{PAGE_DESCRIPTION}}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{PAGE_URL}}">
+    <meta property="og:title" content="{{PAGE_TITLE}}">
+    <meta property="og:description" content="{{PAGE_DESCRIPTION}}">
+    <meta property="og:image" content="{{PREVIEW_IMAGE_URL}}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{PAGE_URL}}">
+    <meta property="twitter:title" content="{{PAGE_TITLE}}">
+    <meta property="twitter:description" content="{{PAGE_DESCRIPTION}}">
+    <meta property="twitter:image" content="{{PREVIEW_IMAGE_URL}}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .certificate-wrapper {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .canvas-container {
+            width: 100%;
+            overflow: auto;
+        }
+
+        #certificate-canvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI Karyashala - Certificate</h1>
+            <p>{{STUDENT_NAME}}</p>
+        </div>
+
+        <div class="certificate-wrapper">
+            <div class="canvas-container">
+                <div id="loading" class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading certificate...</p>
+                </div>
+                <canvas id="certificate-canvas" style="display: none;"></canvas>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button id="download-btn" class="btn btn-primary" disabled>
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                </svg>
+                Download PDF
+            </button>
+        </div>
+
+        <div class="footer">
+            <p>AI Karyashala Bootcamp - KIET, Kakinada | Feb 7-8, 2026</p>
+            <p><a href="https://aikaryashala.com">aikaryashala.com</a></p>
+        </div>
+    </div>
+
+    <!-- Student Data (embedded by generator) -->
+    <script>
+        const STUDENT_DATA = {{STUDENT_JSON}};
+        const PHOTO_PATH = "{{PHOTO_PATH}}";
+    </script>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Certificate Renderer -->
+    <script src="{{ASSETS_PATH}}js/certificate-renderer.js"></script>
+
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        async function init() {
+            const canvas = document.getElementById('certificate-canvas');
+            const loading = document.getElementById('loading');
+            const downloadBtn = document.getElementById('download-btn');
+
+            try {
+                // Wait for fonts
+                await document.fonts.ready;
+
+                // Render certificate
+                await renderCertificate(STUDENT_DATA, PHOTO_PATH, 'en');
+
+                // Show canvas, hide loading
+                canvas.style.display = 'block';
+                loading.style.display = 'none';
+                downloadBtn.disabled = false;
+
+            } catch (error) {
+                console.error('Failed to render certificate:', error);
+                loading.innerHTML = '<p style="color: #dc2626;">Failed to load certificate. Please refresh the page.</p>';
+            }
+        }
+
+        function downloadPDF() {
+            const canvas = document.getElementById('certificate-canvas');
+            const downloadBtn = document.getElementById('download-btn');
+
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = 'Generating PDF...';
+
+            try {
+                // Create PDF in landscape A4
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                // Get canvas as image
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+
+                // A4 landscape dimensions in mm
+                const pageWidth = 297;
+                const pageHeight = 210;
+
+                // Add image to PDF (full page)
+                pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
+
+                // Download
+                pdf.save(STUDENT_DATA.rollno + '-certificate.pdf');
+
+            } catch (error) {
+                console.error('PDF generation failed:', error);
+                alert('Failed to generate PDF. Please try again.');
+            } finally {
+                downloadBtn.disabled = false;
+                downloadBtn.innerHTML = `
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    </svg>
+                    Download PDF
+                `;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('download-btn').addEventListener('click', downloadPDF);
+
+        // Initialize
+        init();
+    </script>
+</body>
+</html>

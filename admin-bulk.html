@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Bulk Certificate Generation</title>
+    
+    <!-- Google Fonts (same as main portal) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&family=Tiro+Telugu&display=swap" rel="stylesheet">
+    
+    <!-- CDN Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #1f2937;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        h1::before {
+            content: '⚙️';
+        }
+        
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        input[type="file"],
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .row .form-group {
+            flex: 1;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: #fff;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: #e2e8f0;
+        }
+        
+        .progress-section {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .progress-section.active {
+            display: block;
+        }
+        
+        .progress-bar-container {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+        
+        .logs {
+            background: #1e293b;
+            color: #94a3b8;
+            border-radius: 8px;
+            padding: 16px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        
+        .logs .success { color: #4ade80; }
+        .logs .error { color: #f87171; }
+        .logs .warning { color: #fbbf24; }
+        .logs .info { color: #60a5fa; }
+        
+        .note {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #92400e;
+        }
+        
+        /* Hidden canvas for rendering */
+        #certificate-canvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bulk Certificate Generator</h1>
+        <p class="subtitle">Generate print-ready PDF with multiple certificates using existing design</p>
+        
+        <div class="form-group">
+            <label for="csvFile">CSV File (optional - uses students.csv if empty)</label>
+            <input type="file" id="csvFile" accept=".csv">
+        </div>
+        
+        <div class="form-group">
+            <label for="photosPath">Photos Folder Path</label>
+            <input type="text" id="photosPath" value="assets/photos/" placeholder="assets/photos/">
+        </div>
+        
+        <div class="row">
+            <div class="form-group">
+                <label for="startIndex">Start Index (0-based)</label>
+                <input type="number" id="startIndex" value="0" min="0">
+            </div>
+            <div class="form-group">
+                <label for="batchSize">Batch Size</label>
+                <input type="number" id="batchSize" value="2" min="1" max="200">
+            </div>
+        </div>
+        
+        <div class="checkbox-group">
+            <label class="checkbox-item">
+                <input type="checkbox" id="generateTelugu">
+                <span>Generate Telugu copy too (adds _TE suffix pages)</span>
+            </label>
+            <label class="checkbox-item">
+                <input type="checkbox" id="skipMissing" checked>
+                <span>Skip students with missing photos</span>
+            </label>
+        </div>
+        
+        <div class="btn-group">
+            <button class="btn btn-primary" id="generateBtn">📄 Generate Batch PDF</button>
+            <button class="btn btn-secondary" id="cancelBtn" disabled>✕ Cancel</button>
+        </div>
+        
+        <div class="progress-section" id="progressSection">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p class="progress-text" id="progressText">Preparing...</p>
+            <div class="logs" id="logs"></div>
+        </div>
+        
+        <div class="note">
+            <strong>📌 Important:</strong> Must run via local server (not file://). 
+            Use <code>python -m http.server 8000</code> and open <code>http://localhost:8000/admin-bulk.html</code>
+        </div>
+    </div>
+    
+    <!-- Hidden canvas for certificate rendering -->
+    <canvas id="certificate-canvas"></canvas>
+    
+    <!-- Existing certificate renderer (unchanged) -->
+    <script src="assets/js/certificate-renderer.js"></script>
+    
+    <!-- Bulk generation logic -->
+    <script src="assets/js/admin-bulk.js"></script>
+</body>
+</html>
