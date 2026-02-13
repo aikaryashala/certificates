@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Verify Certificate — AI Karyashala</title>
+    <meta name="description"
+        content="Verify your AI Karyashala Bootcamp certificate. Enter your Certificate ID to preview and share your certificate.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Verify Certificate — AI Karyashala">
+    <meta property="og:description"
+        content="Enter your Certificate ID to preview and share your AI Karyashala Bootcamp certificate.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ── Reset & Base ─────────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #0f172a;
+            --border: #334155;
+            --border-focus: #6366f1;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --success: #22c55e;
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.1);
+            --success-bg: rgba(34, 197, 94, 0.08);
+            --warning: #f59e0b;
+            --warning-border: rgba(245, 158, 11, 0.35);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 16px;
+            line-height: 1.5;
+        }
+
+        /* ── Layout ───────────────────────────────────────────── */
+        .page-wrapper {
+            width: 100%;
+            max-width: 780px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex: 1;
+        }
+
+        /* ── Header ───────────────────────────────────────────── */
+        .header {
+            text-align: center;
+            padding: 20px 0 8px;
+        }
+
+        .header__badge {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent-hover);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 100px;
+            margin-bottom: 14px;
+        }
+
+        .header__title {
+            font-size: 1.85rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e0e7ff 0%, #a5b4fc 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .header__subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 6px;
+        }
+
+        /* ── Card ─────────────────────────────────────────────── */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+        }
+
+        /* ── Form ─────────────────────────────────────────────── */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.03em;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-row input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        input[type="text"] {
+            background: var(--bg-input);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            padding: 12px 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        input[type="text"]::placeholder {
+            color: var(--text-muted);
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* ── Buttons ──────────────────────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn--primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn--primary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn--outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1.5px solid var(--border);
+        }
+
+        .btn--outline:hover {
+            border-color: var(--text-muted);
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .btn--warning {
+            background: transparent;
+            color: var(--warning);
+            border: 1.5px solid var(--warning-border);
+        }
+
+        .btn--warning:hover {
+            background: rgba(245, 158, 11, 0.08);
+            border-color: var(--warning);
+        }
+
+        .btn--linkedin {
+            background: #0A66C2;
+            color: #fff;
+            border: none;
+        }
+
+        .btn--linkedin:hover {
+            background: #004182;
+            box-shadow: 0 4px 16px rgba(10, 102, 194, 0.35);
+        }
+
+        .btn--sm {
+            padding: 8px 16px;
+            font-size: 0.82rem;
+        }
+
+        /* ── Message ──────────────────────────────────────────── */
+        .message {
+            font-size: 0.85rem;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            margin-top: 10px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .message--error {
+            background: var(--error-bg);
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .message--success {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid rgba(34, 197, 94, 0.15);
+        }
+
+        .message.visible {
+            display: flex;
+        }
+
+        /* ── Result Section ───────────────────────────────────── */
+        .result {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .result.visible {
+            display: flex;
+        }
+
+        /* ── Not Found Section ─────────────────────────────────── */
+        .not-found {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .not-found.visible {
+            display: flex;
+        }
+
+        .not-found__text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .not-found__text strong {
+            color: var(--error);
+        }
+
+        /* ── Pending Certificate Section ───────────────────────── */
+        .pending-cert {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pending-cert.visible {
+            display: flex;
+        }
+
+        .pending-cert__card {
+            background: var(--bg-card);
+            border: 1.5px solid rgba(99, 102, 241, 0.35);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .pending-cert__icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 14px;
+            background: var(--accent-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pending-cert__icon svg {
+            color: var(--accent-hover);
+        }
+
+        .pending-cert__title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--accent-hover);
+            margin-bottom: 6px;
+        }
+
+        .pending-cert__text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .pending-cert__id {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent-hover);
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 4px 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: 'Inter', monospace;
+        }
+
+        /* ── Match Picker ──────────────────────────────────────── */
+        .match-picker {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .match-picker.visible {
+            display: flex;
+        }
+
+        .match-picker__label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .match-picker__list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .match-picker__item {
+            background: var(--bg-input);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 16px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            text-align: left;
+        }
+
+        .match-picker__item:hover {
+            border-color: var(--accent);
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .result__url-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            overflow: hidden;
+        }
+
+        .result__url-bar svg {
+            flex-shrink: 0;
+            color: var(--text-muted);
+        }
+
+        .result__url {
+            flex: 1;
+            min-width: 0;
+            font-size: 0.85rem;
+            color: var(--accent-hover);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            user-select: all;
+        }
+
+        .result__actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #000;
+        }
+
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 520px;
+            border: none;
+            display: block;
+        }
+
+        /* ── Loading overlay ──────────────────────────────────── */
+        .iframe-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.85);
+            z-index: 2;
+            transition: opacity 0.3s;
+        }
+
+        .iframe-loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── Copy tooltip ─────────────────────────────────────── */
+        .copy-toast {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--success);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 100px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s, transform 0.25s;
+            z-index: 100;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ── Footer ───────────────────────────────────────────── */
+        .footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            padding: 20px 0 8px;
+        }
+
+        .footer a {
+            color: var(--accent-hover);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Responsive ───────────────────────────────────────── */
+        @media (max-width: 540px) {
+            body {
+                padding: 16px 10px;
+            }
+
+            .card {
+                padding: 20px 16px;
+            }
+
+            .header__title {
+                font-size: 1.4rem;
+            }
+
+            .input-row {
+                flex-direction: column;
+            }
+
+            .input-row .btn {
+                width: 100%;
+            }
+
+            .iframe-wrapper iframe {
+                height: 340px;
+            }
+
+            .result__actions {
+                flex-direction: column;
+            }
+
+            .result__actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+
+        <!-- Header -->
+        <header class="header">
+            <span class="header__badge">AI Karyashala Bootcamp</span>
+            <h1 class="header__title">Verify Certificate</h1>
+            <p class="header__subtitle">Enter your Roll Number to preview &amp; share your certificate</p>
+        </header>
+
+        <!-- Search Card -->
+        <div class="card" id="search-card">
+            <div class="form-group">
+                <label class="form-label" for="cert-id">Roll Number</label>
+                <div class="input-row">
+                    <input type="text" id="cert-id" list="id-suggestions" placeholder="e.g. 21A4412" autocomplete="off"
+                        spellcheck="false" autofocus>
+                    <datalist id="id-suggestions"></datalist>
+                    <button class="btn btn--primary" id="btn-preview" type="button">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                        Preview
+                    </button>
+                </div>
+                <div class="message message--error" id="msg-error"></div>
+                <!-- Match picker (shown when multiple IDs match) -->
+                <div class="match-picker" id="match-picker">
+                    <span class="match-picker__label">Multiple certificates found. Select yours:</span>
+                    <div class="match-picker__list" id="match-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Not Found Section -->
+        <section class="not-found" id="not-found-section">
+            <div class="card" style="padding:20px 24px; text-align:center;">
+                <p class="not-found__text">
+                    <strong>No attendance record found.</strong><br>
+                    The roll number you entered was not found in our attendance records.<br>
+                    Only students who attended the AI Karyashala Bootcamp are eligible for certificates.
+                </p>
+            </div>
+        </section>
+
+        <!-- Pending Certificate Section -->
+        <section class="pending-cert" id="pending-section">
+            <div class="pending-cert__card">
+                <div class="pending-cert__icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                </div>
+                <p class="pending-cert__title">Certificate Being Processed</p>
+                <p class="pending-cert__text">
+                    We have confirmed your attendance at the AI Karyashala Bootcamp.<br>
+                    Your certificate is currently being generated and will be available soon.
+                </p>
+                <span class="pending-cert__id" id="pending-id"></span>
+                <p class="pending-cert__text" style="margin-top:12px; font-size:0.82rem; color:var(--text-muted);">
+                    Please check back later. If the issue persists, report below.
+                </p>
+                <div style="margin-top:14px;">
+                    <a class="btn btn--warning" id="btn-report-pending" href="#" target="_blank" rel="noopener">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                        Report Issue
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section class="result" id="result-section">
+
+            <!-- URL Bar + Actions -->
+            <div class="card" style="padding:18px 20px;">
+                <div class="result__url-bar" style="margin-bottom:12px;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                    </svg>
+                    <span class="result__url" id="result-url"></span>
+                </div>
+                <div class="result__actions">
+                    <button class="btn btn--primary btn--sm" id="btn-copy">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <rect x="9" y="9" width="13" height="13" rx="2" />
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                        </svg>
+                        Copy Link
+                    </button>
+                    <a class="btn btn--outline btn--sm" id="btn-open" href="#" target="_blank" rel="noopener">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                            <polyline points="15 3 21 3 21 9" />
+                            <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
+                        Open in New Tab
+                    </a>
+                    <a class="btn btn--linkedin btn--sm" id="btn-linkedin" href="#" target="_blank" rel="noopener">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                        Share on LinkedIn
+                    </a>
+                    <a class="btn btn--warning btn--sm" id="btn-report" href="#" target="_blank" rel="noopener">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                        Report Issue
+                    </a>
+                </div>
+            </div>
+
+            <!-- Iframe Preview -->
+            <div class="iframe-wrapper">
+                <div class="iframe-loading" id="iframe-loading">
+                    <div class="spinner"></div>
+                </div>
+                <iframe id="cert-iframe" title="Certificate Preview" sandbox="allow-scripts allow-same-origin"></iframe>
+            </div>
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>AI Karyashala Bootcamp &mdash; KIET, Kakinada</p>
+            <p><a href="https://aikaryashala.com">aikaryashala.com</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Copy Toast -->
+    <div class="copy-toast" id="copy-toast">Link copied!</div>
+
+    <script>
+        (() => {
+            'use strict';
+
+            /* ── Config ─────────────────────────────────────── */
+            const BASE_CERT_PATH = '/certificates/bootcamp/kiet/';
+            const INDEX_JSON_URL = BASE_CERT_PATH + 'index.json';
+            const INPUT_PATTERN = /^[A-Z0-9_\-]{2,40}$/;
+
+            // ⚠️ REPLACE this with your actual Google Form URL
+            // The {ID} placeholder will be replaced with the student's input.
+            const REPORT_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfNcmTaFCd8fMtKeH99BnJCkQtky4GtklHr6McEO1421YmrwQ/viewform?usp=pp_url&entry.324445601={ID}';
+
+            /* ── DOM refs ───────────────────────────────────── */
+            const $id = document.getElementById('cert-id');
+            const $btnPrev = document.getElementById('btn-preview');
+            const $msgErr = document.getElementById('msg-error');
+            const $result = document.getElementById('result-section');
+            const $notFound = document.getElementById('not-found-section');
+            const $pending = document.getElementById('pending-section');
+            const $pendingId = document.getElementById('pending-id');
+            const $url = document.getElementById('result-url');
+            const $btnCopy = document.getElementById('btn-copy');
+            const $btnOpen = document.getElementById('btn-open');
+            const $btnReport = document.getElementById('btn-report');
+            const $btnLinkedIn = document.getElementById('btn-linkedin');
+            const $iframe = document.getElementById('cert-iframe');
+            const $iframeLoad = document.getElementById('iframe-loading');
+            const $toast = document.getElementById('copy-toast');
+            const $datalist = document.getElementById('id-suggestions');
+            const $matchPicker = document.getElementById('match-picker');
+            const $matchList = document.getElementById('match-list');
+
+            /* ── State ──────────────────────────────────────── */
+            let allIds = [];       // Array of all valid cert IDs from index.json
+            const PREFIX_LEN = 8;  // Length of internal prefix (e.g. AIK25B21)
+            let toastTimer = null;
+
+            /* ── Attended but certificate pending ──────────── */
+            const PENDING_IDS = [
+                'AIK256Q1A4521', 'AIK256Q1A4522',
+                'AIK25B21A4272', 'AIK25B21A4273',
+                'AIK25B21A42B3', 'AIK25B21A42B4',
+                'AIK25B21A42C7',
+                'AIK25B21A4303', 'AIK25B21A4306',
+                'AIK25B21A4318', 'AIK25B21A4330',
+                'AIK25B21A4333',
+                'AIK25B21A4409', 'AIK25B21A4480',
+                'AIK25B21A4494', 'AIK25B21A4588',
+                'AIK25B21A4594', 'AIK25B21A4595',
+                'AIK25B21A45A0', 'AIK25B21A45A5',
+                'AIK25B21A45B0',
+                'AIK25B21A4604', 'AIK25B21A4637',
+                'AIK25B21A4641', 'AIK25B21A4667',
+                'AIK25JN1A4209', 'AIK25JN1A4215',
+                'AIK25JN1A4218', 'AIK25JN1A4252',
+                'AIK25JN1A4294',
+                'AIK25JN1A4555', 'AIK25JN1A4590',
+                'AIK25JN1A4598', 'AIK25JN1A4599',
+                'AIK25JN1A45A0', 'AIK25JN1A45A1',
+                'AIK25JN1A45A2', 'AIK25JN1A45B0',
+                'AIK25JN1A45C0', 'AIK25JN1A45C1'
+            ];
+
+            /* ── Load index.json ────────────────────────────── */
+            async function loadIndex() {
+                // Try server path first, then relative path (for local file:// access)
+                const urls = [INDEX_JSON_URL, '../index.json'];
+                for (const url of urls) {
+                    try {
+                        const res = await fetch(url);
+                        if (!res.ok) continue;
+                        const arr = await res.json();
+                        if (!Array.isArray(arr)) continue;
+                        allIds = arr.map(id => String(id).toUpperCase().trim());
+                        // Populate datalist with roll number suffixes (no AIK prefix shown)
+                        const frag = document.createDocumentFragment();
+                        const seen = new Set();
+                        allIds.forEach(id => {
+                            const rollNo = id.length > PREFIX_LEN ? id.slice(PREFIX_LEN) : id;
+                            if (!seen.has(rollNo)) {
+                                seen.add(rollNo);
+                                const opt = document.createElement('option');
+                                opt.value = rollNo;
+                                frag.appendChild(opt);
+                            }
+                        });
+                        $datalist.appendChild(frag);
+                        return; // success — stop trying
+                    } catch (e) {
+                        continue;
+                    }
+                }
+                console.warn('index.json unavailable from all paths, falling back to fetch validation.');
+                allIds = [];
+            }
+
+            /* ── Helpers ────────────────────────────────────── */
+            function showError(msg) {
+                $msgErr.textContent = msg;
+                $msgErr.className = 'message message--error visible';
+            }
+            function clearError() {
+                $msgErr.className = 'message message--error';
+                $msgErr.textContent = '';
+            }
+            function hideAll() {
+                $result.classList.remove('visible');
+                $notFound.classList.remove('visible');
+                $pending.classList.remove('visible');
+                $matchPicker.classList.remove('visible');
+                clearError();
+            }
+            function certUrl(id) {
+                // Use relative path for local file:// access, absolute for server
+                if (location.protocol === 'file:') {
+                    return '../' + encodeURIComponent(id) + '/';
+                }
+                return BASE_CERT_PATH + encodeURIComponent(id) + '/';
+            }
+            function fullUrl(id) {
+                return location.origin + certUrl(id);
+            }
+            function reportUrl(input) {
+                return REPORT_FORM_URL.replace('{ID}', encodeURIComponent(input));
+            }
+
+            /* ── Search: find matching cert IDs ─────────────── */
+            function rollSuffix(id) {
+                return id.length > PREFIX_LEN ? id.slice(PREFIX_LEN) : id;
+            }
+            function findMatches(input) {
+                if (!allIds.length) return null;
+                // 1. Exact match on full ID (in case someone pastes full ID)
+                if (allIds.includes(input)) return [input];
+                // 2. Exact roll number match (suffix after prefix)
+                const exactRoll = allIds.filter(id => rollSuffix(id) === input);
+                if (exactRoll.length) return exactRoll;
+                // 3. Suffix match
+                const suffixMatches = allIds.filter(id => id.endsWith(input));
+                if (suffixMatches.length) return suffixMatches;
+                // 4. Contains match
+                return allIds.filter(id => id.includes(input));
+            }
+
+            /* ── Check if input matches a pending certificate ── */
+            function findPendingMatch(input) {
+                // Exact full ID
+                if (PENDING_IDS.includes(input)) return input;
+                // Exact roll suffix
+                const byRoll = PENDING_IDS.find(id => rollSuffix(id) === input);
+                if (byRoll) return byRoll;
+                // Suffix match
+                const bySuffix = PENDING_IDS.find(id => id.endsWith(input));
+                if (bySuffix) return bySuffix;
+                // Contains
+                const byContains = PENDING_IDS.find(id => id.includes(input));
+                return byContains || null;
+            }
+
+            /* ── Show pending certificate message ──────────── */
+            function showPending(matchedId) {
+                $pendingId.textContent = matchedId;
+                document.getElementById('btn-report-pending').href = reportUrl(matchedId);
+                $pending.classList.add('visible');
+                $pending.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            /* ── Validate & Preview ─────────────────────────── */
+            async function handlePreview(forcedId) {
+                hideAll();
+
+                // If called with a specific ID (from match picker), use it directly
+                if (forcedId) {
+                    showResult(forcedId);
+                    return;
+                }
+
+                // Sanitise input
+                const raw = $id.value;
+                const input = raw.toUpperCase().trim();
+                $id.value = input;
+
+                // Empty check
+                if (!input) { showError('Please enter your Roll Number.'); $id.focus(); return; }
+
+                // Format check
+                if (!INPUT_PATTERN.test(input)) { showError('Invalid format. Use A-Z, 0-9, _ or - (2–40 characters).'); $id.focus(); return; }
+
+                // Search
+                $btnPrev.disabled = true;
+                $btnPrev.innerHTML = '<span class="spinner" style="width:18px;height:18px;border-width:2px;"></span> Searching…';
+
+                try {
+                    // ── Check pending IDs FIRST (exact match on full ID or roll suffix) ──
+                    const pendingExact = PENDING_IDS.includes(input);
+                    const pendingByRoll = !pendingExact && PENDING_IDS.find(id => rollSuffix(id) === input);
+                    if (pendingExact || pendingByRoll) {
+                        showPending(pendingExact ? input : pendingByRoll);
+                        return;    // ← exit early inside the finally block will still reset button
+                    }
+
+                    if (allIds.length) {
+                        // index.json loaded — search locally
+                        const matches = findMatches(input);
+                        if (!matches || matches.length === 0) {
+                            // Check if it's a pending certificate (suffix / contains)
+                            const pendingMatch = findPendingMatch(input);
+                            if (pendingMatch) {
+                                showPending(pendingMatch);
+                            } else {
+                                showNotFound(input);
+                            }
+                        } else if (matches.length === 1) {
+                            showResult(matches[0]);
+                        } else {
+                            showMatchPicker(matches);
+                        }
+                    } else {
+                        // Fallback: try fetching with common prefixes or raw input
+                        const found = await fallbackCheck(input);
+                        if (found) {
+                            showResult(found);
+                        } else {
+                            // Check pending IDs before showing not found
+                            const pendingMatch = findPendingMatch(input);
+                            if (pendingMatch) {
+                                showPending(pendingMatch);
+                            } else {
+                                showNotFound(input);
+                            }
+                        }
+                    }
+                } catch (err) {
+                    showError('Something went wrong. Please try again.');
+                    console.error(err);
+                } finally {
+                    $btnPrev.disabled = false;
+                    $btnPrev.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Preview';
+                }
+            }
+
+            /* ── Fallback: try fetching with known prefixes ─── */
+            const KNOWN_PREFIXES = ['AIK25B21', 'AIK256Q1', 'AIK25JN1', ''];
+            async function fallbackCheck(input) {
+                for (const prefix of KNOWN_PREFIXES) {
+                    const testId = prefix + input;
+                    try {
+                        const res = await fetch(certUrl(testId), { method: 'GET', redirect: 'follow' });
+                        if (res.ok) return testId;
+                    } catch { /* continue */ }
+                }
+                return null;
+            }
+
+            /* ── Show match picker (roll numbers only) ──────── */
+            function showMatchPicker(matches) {
+                $matchList.innerHTML = '';
+                matches.forEach(id => {
+                    const btn = document.createElement('button');
+                    btn.className = 'match-picker__item';
+                    btn.textContent = rollSuffix(id);
+                    btn.addEventListener('click', () => handlePreview(id));
+                    $matchList.appendChild(btn);
+                });
+                $matchPicker.classList.add('visible');
+                $matchPicker.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            /* ── Show not found ─────────────────────────────── */
+            function showNotFound(input) {
+                $notFound.classList.add('visible');
+                $notFound.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            /* ── Show result ────────────────────────────────── */
+            function showResult(id) {
+                hideAll();
+                const url = fullUrl(id);
+                const path = certUrl(id);
+
+                $url.textContent = url;
+                $btnOpen.href = path;
+                $btnReport.href = reportUrl(id);
+                $btnLinkedIn.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
+                $iframe.src = path;
+                $iframeLoad.classList.remove('hidden');
+
+                $result.classList.add('visible');
+                $result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Update browser URL without reload
+                const verifyUrl = new URL(location);
+                verifyUrl.searchParams.set('id', id);
+                history.replaceState(null, '', verifyUrl);
+            }
+
+            /* ── Iframe loaded ──────────────────────────────── */
+            $iframe.addEventListener('load', () => {
+                $iframeLoad.classList.add('hidden');
+            });
+
+            /* ── Copy Link ──────────────────────────────────── */
+            async function copyLink() {
+                const url = $url.textContent;
+                try {
+                    await navigator.clipboard.writeText(url);
+                } catch {
+                    // Fallback
+                    const ta = document.createElement('textarea');
+                    ta.value = url;
+                    ta.style.cssText = 'position:fixed;left:-9999px';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                }
+                // Toast
+                $toast.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => $toast.classList.remove('show'), 2000);
+            }
+
+            /* ── Query-param auto-preview ───────────────────── */
+            async function autoPreviewFromQuery() {
+                const params = new URLSearchParams(location.search);
+                const qid = (params.get('id') || '').toUpperCase().trim();
+                if (qid && INPUT_PATTERN.test(qid)) {
+                    $id.value = qid;
+                    await loadIndexPromise;
+                    handlePreview();
+                }
+            }
+
+            /* ── Event listeners ────────────────────────────── */
+            $btnPrev.addEventListener('click', () => handlePreview());
+            $btnCopy.addEventListener('click', copyLink);
+
+            // Enter key submits
+            $id.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); handlePreview(); }
+            });
+
+            // Auto-uppercase on input
+            $id.addEventListener('input', () => {
+                const pos = $id.selectionStart;
+                $id.value = $id.value.toUpperCase();
+                $id.setSelectionRange(pos, pos);
+            });
+
+            /* ── Init ───────────────────────────────────────── */
+            const loadIndexPromise = loadIndex();
+            autoPreviewFromQuery();
+        })();
+    </script>
+
+</body>
+
+</html>
