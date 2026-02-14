@@ -956,9 +956,8 @@
                 $btnOpen.href = path;
                 $btnReport.href = reportUrl(id);
                 
-                // LinkedIn share with pre-filled text + hashtags
-                const linkedinText = `${url}\n\n${SHARE_HASHTAGS.join(' ')}`;
-                $btnLinkedIn.href = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(linkedinText);
+                // Use offsite share so LinkedIn fetches OG tags and shows the full preview card.
+                $btnLinkedIn.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
                
 
                 $iframe.src = path;
