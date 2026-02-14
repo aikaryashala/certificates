@@ -8,7 +8,7 @@
     <!-- Primary Meta Tags -->
     <title>Verify Certificate — AI Karyashala</title>
     <meta name="description"
-        content="Verify your certificate. Enter your Certificate ID to preview and share your certificate.">
+        content="Share your certificate. Enter your rollnumber to preview and share your certificate.">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -957,7 +957,6 @@
                 $btnReport.href = reportUrl(id);
                 
                 // LinkedIn share with pre-filled text + hashtags
-                const linkedinText = `My participation certificate: ${url}\n\n${SHARE_HASHTAGS.join(' ')}`;
                 $btnLinkedIn.href = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(linkedinText);
                
 
