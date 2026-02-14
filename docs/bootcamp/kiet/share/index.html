@@ -377,6 +377,38 @@
             user-select: all;
         }
 
+        .result__hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-top: 4px;
+        }
+        
+        .result__hashtags-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+        
+        .hashtag {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--accent-hover);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 100px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            user-select: all;
+            transition: background 0.2s;
+        }
+        
+        .hashtag:hover {
+            background: rgba(99, 102, 241, 0.22);
+        }
+
         .result__actions {
             display: flex;
             gap: 10px;
@@ -620,12 +652,19 @@
 
             <!-- URL Bar + Actions -->
             <div class="card" style="padding:18px 20px;">
-                <div class="result__url-bar" style="margin-bottom:12px;">
+                <div class="result__url-bar" style="margin-bottom:8px;">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
                         <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
                     </svg>
                     <span class="result__url" id="result-url"></span>
+                </div>
+                <div class="result__hashtags" style="margin-bottom:12px;">
+                                <span class="result__hashtags-label">Share with:</span>
+                                <span class="hashtag">#AIKaryashala</span>
+                                <span class="hashtag">#Bootcamp</span>
+                                <span class="hashtag">#KIET</span>
+                                <span class="hashtag">#Kakinada</span>
                 </div>
                 <div class="result__actions">
                     <button class="btn btn--primary btn--sm" id="btn-copy">
@@ -905,6 +944,9 @@
             }
 
             /* ── Show result ────────────────────────────────── */
+            /* ── Hashtags for sharing ────────────────────────── */
+            const SHARE_HASHTAGS = ['#AIKaryashala', '#Bootcamp', '#KIET', '#Kakinada'];
+            
             function showResult(id) {
                 hideAll();
                 const url = fullUrl(id);
@@ -913,7 +955,11 @@
                 $url.textContent = url;
                 $btnOpen.href = path;
                 $btnReport.href = reportUrl(id);
+                
+                // LinkedIn share with pre-filled text + hashtags
+                const linkedinText = `I successfully completed the AI Karyashala Bootcamp at KIET, Kakinada! 🎓🚀\n\nVerify my certificate here:\n${url}\n\n${SHARE_HASHTAGS.join(' ')}`;
                 $btnLinkedIn.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
+
                 $iframe.src = path;
                 $iframeLoad.classList.remove('hidden');
 
@@ -934,12 +980,13 @@
             /* ── Copy Link ──────────────────────────────────── */
             async function copyLink() {
                 const url = $url.textContent;
+                const shareText = url + '\n\n' + SHARE_HASHTAGS.join(' ');
                 try {
-                    await navigator.clipboard.writeText(url);
+                    await navigator.clipboard.writeText(shareText);
                 } catch {
                     // Fallback
                     const ta = document.createElement('textarea');
-                    ta.value = url;
+                    ta.value = shareText;
                     ta.style.cssText = 'position:fixed;left:-9999px';
                     document.body.appendChild(ta);
                     ta.select();
